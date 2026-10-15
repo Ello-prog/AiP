@@ -1,4 +1,26 @@
 <% layout('./layout/page.ejs') %>
 
-<h1><%= title %></h1>
-<p>Российский автопроизводитель. Марка автомобилей — Lada. Город: Тольятти.</p>
+<section class="hero">
+  <img src="/images/niva.jpg" alt="Lada Niva">
+  <div class="hero-copy">
+    <p class="eyebrow">Тольятти · с 1966</p>
+    <h1>АвтоВАЗ</h1>
+    <p class="tagline">Дорога начинается в Тольятти.</p>
+    <p class="lead">Три модели одной марки: городской автомобиль, машина для трассы и внедорожник.</p>
+  </div>
+</section>
+
+<section class="garage">
+  <p class="kicker">Модельный ряд</p>
+  <h2>Модели, с которых начинается разговор</h2>
+  <div class="grid">
+    <% cars.forEach(function (car) { %>
+      <a class="card" href="<%= car.href %>">
+        <img src="<%= car.picture %>" alt="<%= car.title %>">
+        <p class="tag"><%= car.tag %></p>
+        <h3><%= car.title %></h3>
+        <p><%= car.card %></p>
+      </a>
+    <% }) %>
+  </div>
+</section>
