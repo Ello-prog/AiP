@@ -1,22 +1,34 @@
-var express = require("express")
-var app = express()
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
-app.get("/", function (req, res) {
-    var page = '<!doctype html>' +
-        '<html lang="ru">' +
-        '<head>' +
-        '<meta charset="UTF-8">' +
-        '<title>АвтоВАЗ</title>' +
-        '</head>' +
-        '<body>' +
-        '<h1>АвтоВАЗ</h1>' +
-        '<p>Российский автопроизводитель. Марка автомобилей — Lada.</p>' +
-        '<p>Город: Тольятти.</p>' +
-        '</body>' +
-        '</html>'
-    res.send(page)
-})
+var indexRouter = require('./routes/index');
 
-app.listen(3000, function () {
-    console.log("Сервер АвтоВАЗ запущен: http://localhost:3000")
-})
+var app = express();
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+
+app.use(function (req, res, next) {
+  next(createError(404));
+});
+
+app.use(function (err, req, res, next) {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
