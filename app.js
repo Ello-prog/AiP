@@ -6,6 +6,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/az2024')
 var session = require("express-session")
+var MongoStore = require('connect-mongo');
 
 var indexRouter = require('./routes/index');
 var carsRouter = require('./routes/cars');
@@ -27,7 +28,8 @@ app.use(session({
  cookie:{maxAge:60*1000},
  proxy: true,
  resave: true,
- saveUninitialized: true
+ saveUninitialized: true,
+ store: MongoStore.create({mongoUrl: 'mongodb://127.0.0.1:27017/az2024'})
 }))
 
 app.use('/', indexRouter);
