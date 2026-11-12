@@ -15,8 +15,8 @@
   <h2>Модели, с которых начинается разговор</h2>
   <div class="grid">
     <% cars.forEach(function (car) { %>
-      <a class="card" href="<%= car.href %>">
-        <img src="<%= car.picture %>" alt="<%= car.title %>">
+      <a class="card" href="/cars/<%= car.nick %>">
+        <img src="<%= car.avatar %>" alt="<%= car.title %>">
         <p class="tag"><%= car.tag %></p>
         <h3><%= car.title %></h3>
         <p><%= car.card %></p>
