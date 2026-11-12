@@ -20,11 +20,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
-            <li class="nav-item"><a class="nav-link" href="/cars/granta">Гранта</a></li>
-            <li class="nav-item"><a class="nav-link" href="/cars/vesta">Веста</a></li>
-            <li class="nav-item"><a class="nav-link" href="/cars/niva">Нива</a></li>
-            <li class="nav-item"><a class="nav-link" href="/cars/vaz-2107">ВАЗ-2107</a></li>
-            <li class="nav-item"><a class="nav-link" href="/cars/vaz-2170">ВАЗ-2170</a></li>
+            <% if (typeof nav == 'object' && nav) { %>
+              <% nav.forEach(function (item) { %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/cars/<%= item.nick %>"><%= item.title %></a>
+                </li>
+              <% }) %>
+            <% } %>
+            <% if (typeof user !== 'undefined' && user) { %>
+              <li class="nav-item">
+                <form action="/logout" method="post">
+                  <button type="submit" class="nav-link">Выйти</button>
+                </form>
+              </li>
+            <% } else { %>
+              <li class="nav-item"><a class="nav-link" href="/logreg">Войти</a></li>
+            <% } %>
           </ul>
         </div>
       </div>

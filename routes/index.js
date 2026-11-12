@@ -1,14 +1,57 @@
 var express = require('express');
 var router = express.Router();
 var Car = require('../models/car').Car;
+var User = require('../models/user').User;
 
 router.get('/', async function (req, res, next) {
   try {
+    req.session.greeting = 'Hi!!!';
     var cars = await Car.find();
-    res.render('index', { title: 'АвтоВАЗ', cars: cars });
+    res.render('index', {
+      title: 'АвтоВАЗ',
+      cars: cars,
+      counter: req.session.counter
+    });
   } catch (err) {
     next(err);
   }
+});
+
+router.get('/logreg', function (req, res, next) {
+  res.render('logreg', { title: 'Вход', error: null });
+});
+
+router.post('/logreg', async function (req, res, next) {
+  try {
+    var username = req.body.username;
+    var password = req.body.password;
+    if (!username || !password) {
+      return res.render('logreg', { title: 'Вход', error: 'Введите имя и пароль' });
+    }
+    var users = await User.find({ username: username });
+    if (!users.length) {
+      var user = new User({ username: username, password: password });
+      await user.save();
+      req.session.user_id = user._id;
+      res.redirect('/');
+    } else {
+      var foundUser = users[0];
+      if (foundUser.checkPassword(password)) {
+        req.session.user_id = foundUser._id;
+        res.redirect('/');
+      } else {
+        res.render('logreg', { title: 'Вход', error: 'Пароль не верный' });
+      }
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/logout', function (req, res, next) {
+  req.session.destroy(function () {
+    res.redirect('/');
+  });
 });
 
 module.exports = router;
