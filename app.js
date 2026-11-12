@@ -7,6 +7,7 @@ var mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/az2024')
 
 var indexRouter = require('./routes/index');
+var carsRouter = require('./routes/cars');
 
 var app = express();
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/cars', carsRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));
