@@ -11,6 +11,20 @@
     <link rel="stylesheet" href="public/stylesheets/style.css">
   </head>
   <body>
+    <div id="entry-gate" class="entry-gate">
+      <form class="entry-card">
+        <h1>Регистрация и вход</h1>
+        <p>Введите имя пользователя и пароль. Если такого пользователя нет, он будет создан.</p>
+        <label>Имя
+          <input type="text" name="username" placeholder="Введите имя" autocomplete="username">
+        </label>
+        <label>Пароль
+          <input type="password" name="password" placeholder="Введите пароль" autocomplete="current-password">
+        </label>
+        <button type="submit">Войти</button>
+        <p class="entry-error" hidden></p>
+      </form>
+    </div>
     <nav class="navbar navbar-expand-lg navbar-light site-nav">
       <div class="container-fluid">
         <a class="navbar-brand logo" href="index.html">АвтоВАЗ</a>
@@ -79,6 +93,7 @@
       <p>Дорога начинается в Тольятти.</p>
       <p class="copy">Учебный сайт о марке Lada.</p>
     </footer>
+    <script src="public/gate.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>
