@@ -14,6 +14,7 @@
   }
 
   if (sessionStorage.getItem('az-auth')) {
+    document.body.classList.add('is-open');
     gate.remove();
     return;
   }
@@ -39,6 +40,7 @@
     users[username] = password;
     localStorage.setItem('az-users', JSON.stringify(users));
     sessionStorage.setItem('az-auth', username);
+    document.body.classList.add('is-open');
     gate.remove();
   });
 })();
